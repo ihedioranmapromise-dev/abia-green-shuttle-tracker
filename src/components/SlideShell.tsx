@@ -15,9 +15,12 @@ export function SlideShell({ children, slideKey }: SlideShellProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-      className="absolute inset-0 flex items-center justify-center px-6 md:px-12"
+      className="absolute inset-0 overflow-y-auto overflow-x-hidden overscroll-contain"
     >
-      <div className="w-full max-w-6xl mx-auto">{children}</div>
+      {/* Padding accounts for top progress bar, bottom dots, and side arrows */}
+      <div className="min-h-full flex items-center justify-center px-6 py-20 md:px-20 md:py-24">
+        <div className="w-full max-w-6xl mx-auto">{children}</div>
+      </div>
     </motion.section>
   );
 }
