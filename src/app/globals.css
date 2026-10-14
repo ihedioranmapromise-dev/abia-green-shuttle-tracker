@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
   --color-bg: #0F0F1A;
@@ -14,8 +15,8 @@
 
 html,
 body {
-  background: var(--color-bg);
-  color: var(--color-fg);
+  background: #0F0F1A;
+  color: #F5F5F7;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,8 +29,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-bg);
+  background: #14B8A6;
+  color: #0F0F1A;
 }
 
 html::-webkit-scrollbar,
