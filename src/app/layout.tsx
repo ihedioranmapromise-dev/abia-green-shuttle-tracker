@@ -14,12 +14,6 @@ export const metadata: Metadata = {
   title: SITE.title,
   description: SITE.description,
   metadataBase: new URL(SITE.url),
-  manifest: '/manifest.webmanifest',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'Green Shuttle',
-  },
   openGraph: {
     title: SITE.title,
     description: SITE.description,
@@ -51,7 +45,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Browser scroll restoration fights our slide system on refresh/return. Disable it. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `if ('scrollRestoration' in history) history.scrollRestoration = 'manual';`,
