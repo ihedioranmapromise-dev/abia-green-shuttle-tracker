@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Mail, MessageCircle } from 'lucide-react';
+import { Mail, MessageCircle } from 'lucide-react';
 import { CONTACT } from '@/lib/constants';
 
 const STACK = [
@@ -57,15 +57,16 @@ export function Slide08Profile() {
               href="https://github.com/ihedioranmapromise-dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-2 text-muted hover:text-accent transition-colors group"
+              className="mt-3 inline-flex items-center gap-2 text-muted hover:text-accent transition-colors group"
               whileHover={{ x: 3 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
               <motion.span
                 animate={{ y: [0, -3, 0] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                className="flex h-5 w-5 items-center justify-center rounded-full border border-current text-[9px] font-semibold tracking-tight"
               >
-                <Github className="h-4 w-4" />
+                GH
               </motion.span>
               <span className="text-sm tracking-tight">ihedioranmapromise-dev</span>
             </motion.a>
