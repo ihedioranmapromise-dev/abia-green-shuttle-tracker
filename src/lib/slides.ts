@@ -5,7 +5,8 @@ export type SlideId =
   | 'people'
   | 'government'
   | 'vision'
-  | 'ask';
+  | 'ask'
+  | 'profile';
 
 export interface SlideConfig {
   id: SlideId;
@@ -21,6 +22,7 @@ export const SLIDES: SlideConfig[] = [
   { id: 'government', title: 'For the Government',  durationMs: 9000 },
   { id: 'vision',     title: 'The Vision',          durationMs: 8000 },
   { id: 'ask',        title: 'The Ask',             durationMs: null },
+  { id: 'profile',    title: 'The Builder',         durationMs: null },
 ];
 
 export const SLIDE_COUNT = SLIDES.length;
