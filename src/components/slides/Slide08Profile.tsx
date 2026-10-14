@@ -1,8 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, MessageCircle } from 'lucide-react';
-import { CONTACT } from '@/lib/constants';
 
 const STACK = [
   'React',
@@ -26,12 +24,6 @@ const CAPABILITIES = [
   'Offline-first systems',
 ];
 
-const BEYOND = [
-  'Fleet Operations Console',
-  'Revenue Reconciliation Dashboard',
-  'Citizen Feedback Channel',
-];
-
 const fade = (delay: number) => ({
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
@@ -41,14 +33,13 @@ const fade = (delay: number) => ({
 export function Slide08Profile() {
   return (
     <div className="w-full max-w-3xl mx-auto space-y-7 md:space-y-9">
-      {/* Header — name, github link, availability */}
       <motion.header {...fade(0.15)} className="relative">
         <div className="flex items-start justify-between gap-4">
           <div>
             <motion.h1
-              className="text-5xl md:text-7xl font-semibold tracking-tight bg-gradient-to-r from-fg via-accent to-fg bg-[length:200%_100%] bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ['0%_50%', '200%_50%'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+              className="text-5xl md:text-7xl font-semibold tracking-tight bg-gradient-to-r from-fg via-accent via-fg to-accent bg-[length:300%_100%] bg-clip-text text-transparent"
+              animate={{ backgroundPosition: ['0%_50%', '300%_50%'] }}
+              transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
             >
               Moph
             </motion.h1>
@@ -57,7 +48,7 @@ export function Slide08Profile() {
               href="https://github.com/ihedioranmapromise-dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-2 text-muted hover:text-accent transition-colors group"
+              className="mt-3 inline-flex items-center gap-2 text-muted hover:text-accent transition-colors"
               whileHover={{ x: 3 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
@@ -86,7 +77,6 @@ export function Slide08Profile() {
         </p>
       </motion.header>
 
-      {/* Stack */}
       <motion.section {...fade(0.4)} className="space-y-3">
         <h2 className="text-[11px] text-muted tracking-[0.25em] uppercase">Stack</h2>
         <div className="flex flex-wrap gap-2">
@@ -101,7 +91,6 @@ export function Slide08Profile() {
         </div>
       </motion.section>
 
-      {/* What I build */}
       <motion.section {...fade(0.55)} className="space-y-3">
         <h2 className="text-[11px] text-muted tracking-[0.25em] uppercase">What I build</h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm md:text-base text-fg/85">
@@ -113,45 +102,6 @@ export function Slide08Profile() {
           ))}
         </ul>
       </motion.section>
-
-      {/* Beyond this app */}
-      <motion.section {...fade(0.7)} className="space-y-3">
-        <h2 className="text-[11px] text-muted tracking-[0.25em] uppercase">Beyond this app</h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-          {BEYOND.map((b) => (
-            <li
-              key={b}
-              className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2.5 text-fg/85 text-center sm:text-left"
-            >
-              {b}
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* Contact */}
-      <motion.div {...fade(0.85)} className="flex flex-col sm:flex-row gap-3 pt-2">
-        <a
-          href={`mailto:${CONTACT.email}`}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-fg hover:border-accent/40 hover:bg-accent/5 transition-all"
-        >
-          <Mail className="h-4 w-4" />
-          Email
-        </a>
-        <a
-          href={CONTACT.whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-accent hover:bg-accent/20 transition-all"
-        >
-          <MessageCircle className="h-4 w-4" />
-          WhatsApp
-        </a>
-      </motion.div>
-
-      <motion.p {...fade(1)} className="text-xs text-muted/80 leading-relaxed pt-1">
-        Available for scoped engagements with the Ministry, its agencies, and state-owned transport operations.
-      </motion.p>
     </div>
   );
 }
