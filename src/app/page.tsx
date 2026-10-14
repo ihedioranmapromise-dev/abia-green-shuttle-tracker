@@ -14,6 +14,8 @@ import { Slide06Vision } from '@/components/slides/Slide06Vision';
 import { Slide07Ask } from '@/components/slides/Slide07Ask';
 import { SLIDES } from '@/lib/slides';
 
+// Slides 1–6 share the same shape (no props). Slide 7 is handled separately
+// because it needs the `onRestart` callback.
 const SLIDE_COMPONENTS = [
   Slide01Hook,
   Slide02Gap,
@@ -21,11 +23,11 @@ const SLIDE_COMPONENTS = [
   Slide04People,
   Slide05Government,
   Slide06Vision,
-  Slide07Ask,
 ];
 
 export default function Page() {
   const slideshow = useSlideshow();
+  const isLast = slideshow.index === SLIDES.length - 1;
   const CurrentSlide = SLIDE_COMPONENTS[slideshow.index];
 
   return (
@@ -39,7 +41,7 @@ export default function Page() {
 
       <AnimatePresence mode="wait">
         <SlideShell key={slideshow.index} slideKey={slideshow.index}>
-          {slideshow.isLast ? (
+          {isLast ? (
             <Slide07Ask onRestart={slideshow.restart} />
           ) : (
             <CurrentSlide />
@@ -47,7 +49,6 @@ export default function Page() {
         </SlideShell>
       </AnimatePresence>
 
-      {/* Slide indicator, bottom center */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40">
         {SLIDES.map((s, i) => (
           <button
