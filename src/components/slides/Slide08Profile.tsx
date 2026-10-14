@@ -39,7 +39,7 @@ export function Slide08Profile() {
             <motion.h1
               className="text-5xl md:text-7xl font-semibold tracking-tight bg-gradient-to-r from-fg via-accent via-fg to-accent bg-[length:300%_100%] bg-clip-text text-transparent"
               animate={{ backgroundPosition: ['0%_50%', '300%_50%'] }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
             >
               Moph
             </motion.h1>
@@ -54,7 +54,7 @@ export function Slide08Profile() {
             >
               <motion.span
                 animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 className="flex h-5 w-5 items-center justify-center rounded-full border border-current text-[9px] font-semibold tracking-tight"
               >
                 GH
