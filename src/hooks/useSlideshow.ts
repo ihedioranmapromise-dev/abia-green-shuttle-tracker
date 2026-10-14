@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { SLIDES, LAST_SLIDE_INDEX } from '@/lib/slides';
 
 interface UseSlideshowOptions {
-  /** Called whenever the slide changes. Useful for analytics or resetting internal slide state. */
   onSlideChange?: (index: number) => void;
 }
 
@@ -12,51 +11,63 @@ export function useSlideshow({ onSlideChange }: UseSlideshowOptions = {}) {
   const [index, setIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const touchStartX = useRef<number | null>(null);
+  const callbackRef = useRef(onSlideChange);
 
-  // Core navigation — clamps to bounds, fires callback.
-  const goTo = useCallback(
-    (next: number) => {
-      setIndex((current) => {
-        const clamped = Math.max(0, Math.min(LAST_SLIDE_INDEX, next));
-        if (clamped !== current) onSlideChange?.(clamped);
-        return clamped;
-      });
-    },
-    [onSlideChange]
-  );
+  // Keep the latest callback without re-triggering effects.
+  useEffect(() => {
+    callbackRef.current = onSlideChange;
+  }, [onSlideChange]);
 
-  const next = useCallback(() => goTo(index + 1), [goTo, index]);
-  const prev = useCallback(() => goTo(index - 1), [goTo, index]);
+  const goTo = useCallback((next: number) => {
+    setIndex((current) => {
+      const clamped = Math.max(0, Math.min(LAST_SLIDE_INDEX, next));
+      if (clamped !== current) callbackRef.current?.(clamped);
+      return clamped;
+    });
+  }, []);
+
+  const next = useCallback(() => {
+    setIndex((current) => {
+      const nextIndex = Math.min(LAST_SLIDE_INDEX, current + 1);
+      if (nextIndex !== current) callbackRef.current?.(nextIndex);
+      return nextIndex;
+    });
+  }, []);
+
+  const prev = useCallback(() => {
+    setIndex((current) => {
+      const prevIndex = Math.max(0, current - 1);
+      if (prevIndex !== current) callbackRef.current?.(prevIndex);
+      return prevIndex;
+    });
+  }, []);
+
   const restart = useCallback(() => {
     setAutoplay(true);
-    goTo(0);
-  }, [goTo]);
+    setIndex(0);
+  }, []);
 
-  // Manual interaction cancels autoplay for the rest of the session.
   const pause = useCallback(() => setAutoplay(false), []);
 
-  // Auto-advance — reads duration from the slide registry.
+  // Auto-advance — clears on every index/autoplay change, plus on unmount.
   useEffect(() => {
     if (!autoplay) return;
     const duration = SLIDES[index]?.durationMs;
     if (!duration) return;
 
     timerRef.current = setTimeout(() => {
-      setIndex((current) => {
-        const nextIndex = current + 1;
-        if (nextIndex > LAST_SLIDE_INDEX) return current;
-        onSlideChange?.(nextIndex);
-        return nextIndex;
-      });
+      next();
     }, duration);
 
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
     };
-  }, [index, autoplay, onSlideChange]);
+  }, [index, autoplay, next]);
 
-  // Keyboard: arrows, space, escape, R to restart.
+  // Keyboard: arrows, space, R to restart.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ') {
@@ -75,24 +86,6 @@ export function useSlideshow({ onSlideChange }: UseSlideshowOptions = {}) {
     return () => window.removeEventListener('keydown', onKey);
   }, [next, prev, pause, restart]);
 
-  // Touch: swipe left/right on mobile.
-  const onTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  }, []);
-
-  const onTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      if (touchStartX.current === null) return;
-      const delta = e.changedTouches[0].clientX - touchStartX.current;
-      touchStartX.current = null;
-      if (Math.abs(delta) < 50) return; // ignore small drags
-      pause();
-      if (delta < 0) next();
-      else prev();
-    },
-    [next, prev, pause]
-  );
-
   return {
     index,
     total: SLIDES.length,
@@ -104,7 +97,5 @@ export function useSlideshow({ onSlideChange }: UseSlideshowOptions = {}) {
     prev,
     restart,
     pause,
-    onTouchStart,
-    onTouchEnd,
   };
 }
