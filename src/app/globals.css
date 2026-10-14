@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @theme {
   --color-bg: #0F0F1A;
@@ -33,7 +32,6 @@ body {
   color: var(--color-bg);
 }
 
-/* Hide scrollbars — the deck is a fixed-viewport experience */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
@@ -44,7 +42,6 @@ body {
   -ms-overflow-style: none;
 }
 
-/* Accessibility: honor reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
