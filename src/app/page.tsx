@@ -28,20 +28,20 @@ const SLIDE_COMPONENTS = [
 
 export default function Page() {
   const slideshow = useSlideshow();
-  const isAsk = slideshow.index === 6;
-  const isProfile = slideshow.index === 7;
-  const isOffer = slideshow.index === 8;
-  const CurrentSlide = SLIDE_COMPONENTS[slideshow.index];
+  const { index } = slideshow;
+
+  const isAsk = index === 6;
+  const isProfile = index === 7;
+  const isOffer = index === 8;
+  // Guard: if index somehow exceeds our defined slides, don't crash.
+  const CurrentSlide = SLIDE_COMPONENTS[index] ?? Slide01Hook;
 
   return (
-    <main
-      className="relative w-full h-[100dvh] overflow-hidden bg-bg text-fg select-none"
-      onClick={() => slideshow.pause()}
-    >
-      <ProgressBar index={slideshow.index} autoplay={slideshow.autoplay} />
+    <main className="relative w-full h-[100dvh] overflow-hidden bg-bg text-fg select-none">
+      <ProgressBar index={index} autoplay={slideshow.autoplay} />
 
       <AnimatePresence mode="wait">
-        <SlideShell key={slideshow.index} slideKey={slideshow.index}>
+        <SlideShell key={index} slideKey={index}>
           {isOffer ? (
             <Slide09Offer />
           ) : isProfile ? (
@@ -55,7 +55,7 @@ export default function Page() {
       </AnimatePresence>
 
       <NavArrows
-        index={slideshow.index}
+        index={index}
         total={SLIDES.length}
         onPrev={() => {
           slideshow.pause();
@@ -78,7 +78,7 @@ export default function Page() {
             }}
             aria-label={`Go to ${s.title}`}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === slideshow.index ? 'w-8 bg-accent' : 'w-1.5 bg-white/20 hover:bg-white/40'
+              i === index ? 'w-8 bg-accent' : 'w-1.5 bg-white/20 hover:bg-white/40'
             }`}
           />
         ))}
