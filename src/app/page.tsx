@@ -14,6 +14,7 @@ import { Slide05Government } from '@/components/slides/Slide05Government';
 import { Slide06Vision } from '@/components/slides/Slide06Vision';
 import { Slide07Ask } from '@/components/slides/Slide07Ask';
 import { Slide08Profile } from '@/components/slides/Slide08Profile';
+import { Slide09Offer } from '@/components/slides/Slide09Offer';
 import { SLIDES } from '@/lib/slides';
 
 const SLIDE_COMPONENTS = [
@@ -29,20 +30,21 @@ export default function Page() {
   const slideshow = useSlideshow();
   const isAsk = slideshow.index === 6;
   const isProfile = slideshow.index === 7;
+  const isOffer = slideshow.index === 8;
   const CurrentSlide = SLIDE_COMPONENTS[slideshow.index];
 
   return (
     <main
       className="relative w-full h-[100dvh] overflow-hidden bg-bg text-fg select-none"
-      onTouchStart={slideshow.onTouchStart}
-      onTouchEnd={slideshow.onTouchEnd}
       onClick={() => slideshow.pause()}
     >
       <ProgressBar index={slideshow.index} autoplay={slideshow.autoplay} />
 
       <AnimatePresence mode="wait">
         <SlideShell key={slideshow.index} slideKey={slideshow.index}>
-          {isProfile ? (
+          {isOffer ? (
+            <Slide09Offer />
+          ) : isProfile ? (
             <Slide08Profile />
           ) : isAsk ? (
             <Slide07Ask onRestart={slideshow.restart} />
