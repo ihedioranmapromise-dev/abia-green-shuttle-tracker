@@ -3,14 +3,14 @@
 import { motion } from 'framer-motion';
 
 const routes = [
-  { d: 'M80 200 Q 150 150 240 120', delay: 0.4, label: 'Aba → Umuahia' },
-  { d: 'M240 120 Q 320 90 400 60', delay: 0.8, label: 'Umuahia → Ohafia' },
-  { d: 'M120 240 Q 200 220 280 210', delay: 1.2, label: 'Intra-city' },
+  { d: 'M80 200 Q 150 150 240 120', delay: 0.4 },
+  { d: 'M240 120 Q 320 90 400 60', delay: 0.8 },
+  { d: 'M120 240 Q 200 220 280 210', delay: 1.2 },
 ];
 
 export function Slide06Vision() {
   return (
-    <div className="space-y-10 text-center">
+    <div className="space-y-8 md:space-y-10 text-center">
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -45,15 +45,6 @@ export function Slide06Vision() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ duration: 1.5, delay: r.delay, ease: 'easeInOut' }}
               />
-              <motion.circle
-                r="5"
-                fill="#14B8A6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4, delay: r.delay + 1.4 }}
-              >
-                <animateMotion dur="3s" repeatCount="indefinite" path={r.d} begin={`${r.delay + 1.5}s`} />
-              </motion.circle>
             </g>
           ))}
         </svg>
