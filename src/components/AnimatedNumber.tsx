@@ -8,6 +8,8 @@ interface AnimatedNumberProps {
   className?: string;
 }
 
+const FORMATTER = new Intl.NumberFormat('en-NG');
+
 export function AnimatedNumber({ value, duration = 1800, className }: AnimatedNumberProps) {
   const [display, setDisplay] = useState(0);
 
@@ -23,7 +25,6 @@ export function AnimatedNumber({ value, duration = 1800, className }: AnimatedNu
 
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
-      // easeOutExpo for a confident settle
       const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
       setDisplay(Math.floor(eased * value));
       if (t < 1) raf = requestAnimationFrame(tick);
@@ -33,5 +34,5 @@ export function AnimatedNumber({ value, duration = 1800, className }: AnimatedNu
     return () => cancelAnimationFrame(raf);
   }, [value, duration]);
 
-  return <span className={className}>{display.toLocaleString()}</span>;
+  return <span className={className}>{FORMATTER.format(display)}</span>;
 }
